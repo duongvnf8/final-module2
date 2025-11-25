@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: Roboto, 'Noto Naskh Arabic UI', Arial, sans-serif;
+  --font-display: Roboto, 'Noto Naskh Arabic UI', Arial, sans-serif;
+}
+
+* {
+  scrollbar-width: none;
+}
+
+*:hover {
+  scrollbar-width: auto;
+  scrollbar-color: #8a8a8a transparent;
+}
