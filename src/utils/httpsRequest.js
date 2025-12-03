@@ -1,66 +1,105 @@
+// src/utils/httpsRequest.js
 import axios from 'axios';
-const baseURL = import.meta.env.VITE_BASE_URL;
+
+const baseURL = import.meta.env.VITE_BASE_URL || '';
 
 const httpsRequest = axios.create({
   baseURL,
+  headers: { 'Content-Type': 'application/json' },
 });
 
-httpsRequest.interceptors.request.use(config => {
-  //   const token = localStorage.getItem('token');
+let isRefreshing = false;
+let failedQueue = [];
 
-  //   if (token) config.headers.Authorization = `Bearer ${token}`;
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(p => {
+    if (error) p.reject(error);
+    else p.resolve(token);
+  });
+  failedQueue = [];
+};
 
-  return config;
-});
+// Request interceptor: tự gắn access_token
+httpsRequest.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('access_token');
+    if (token && config.headers)
+      config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  err => Promise.reject(err)
+);
+
+// Response interceptor: khi 401 -> thử refresh token 1 lần rồi retry
+httpsRequest.interceptors.response.use(
+  res => res,
+  async error => {
+    const originalRequest = error.config;
+
+    if (!originalRequest) return Promise.reject(error);
+
+    // nếu response 401 và chưa retry
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      const refreshToken = localStorage.getItem('refresh_token');
+      if (!refreshToken) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
+        return Promise.reject(error);
+      }
+
+      if (isRefreshing) {
+        // queue requests chờ refresh hoàn thành
+        return new Promise(function (resolve, reject) {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(token => {
+            originalRequest.headers.Authorization = 'Bearer ' + token;
+            return httpsRequest(originalRequest);
+          })
+          .catch(err => Promise.reject(err));
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        // gọi thẳng axios để tránh vòng import
+        const { data } = await axios.post(
+          `${baseURL}/auth/refresh-token`,
+          {
+            refreshToken,
+          },
+          {
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+
+        const newAccess = data.access_token;
+        const newRefresh = data.refresh_token;
+
+        if (newAccess) localStorage.setItem('access_token', newAccess);
+        if (newRefresh) localStorage.setItem('refresh_token', newRefresh);
+
+        httpsRequest.defaults.headers.common['Authorization'] =
+          'Bearer ' + newAccess;
+        processQueue(null, newAccess);
+
+        originalRequest.headers.Authorization = 'Bearer ' + newAccess;
+        return httpsRequest(originalRequest);
+      } catch (err) {
+        processQueue(err, null);
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        window.location.href = '/login';
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default httpsRequest;
-
-// let isRefresh = false; // chỉ cho phép refresh token với thằng đầu tiên được chạy vào với lỗi 401
-// let listener = []; // mảng chứa các api lỗi cần được gọi lại
-
-// httpsRequest.interceptors.response.use(
-//   response => {
-//     return response;
-//   },
-//   async error => {
-//     const refreshToken = localStorage.getItem('refresh_token');
-//     const checkRenewToken = refreshToken && error.status === 401; // kiểm tra xem có quyền refresh hay không
-
-//     if (checkRenewToken) {
-//       if (!isRefresh) {
-//         isRefresh = true; // chặn không cho refresh nữa
-
-//         try {
-//           const baseUrl = 'https://api.escuelajs.co/api/v1/auth/refresh-token'; // thay thế url bằng url của anh An cấp
-
-//           const token = await axios.post(baseUrl, {
-//             refreshToken: refreshToken,
-//           });
-
-//           // access_token và refresh_token sửa lại tương ứng api anh An cấp
-//           localStorage.setItem('token', token.data.access_token);
-//           localStorage.setItem('refresh_token', token.data.refresh_token);
-
-//           listener.forEach(item => item()); // gọi lại những api bị lỗi vào sau
-
-//           listener = [];
-//           isRefresh = false;
-//           return httpsRequest(error.config); // gọi lại api lỗi được phản hồi đầu tiên
-//         } catch (error) {
-//           localStorage.removeItem('token');
-//           localStorage.removeItem('refresh_token');
-
-//           listener = [];
-//           isRefresh = false;
-//         }
-//       } else {
-//         return new Promise(resolve => {
-//           listener.push(() => {
-//             resolve(httpsRequest(error.config)); // những api phản hồi chậm hơn sẽ được push vào mảng trong trạng thái pending
-//           });
-//         });
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
