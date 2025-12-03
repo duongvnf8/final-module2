@@ -19,7 +19,6 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
-// Request interceptor: tự gắn access_token
 httpsRequest.interceptors.request.use(
   config => {
     const token = localStorage.getItem('access_token');
@@ -30,7 +29,6 @@ httpsRequest.interceptors.request.use(
   err => Promise.reject(err)
 );
 
-// Response interceptor: khi 401 -> thử refresh token 1 lần rồi retry
 httpsRequest.interceptors.response.use(
   res => res,
   async error => {
@@ -49,7 +47,6 @@ httpsRequest.interceptors.response.use(
       }
 
       if (isRefreshing) {
-        // queue requests chờ refresh hoàn thành
         return new Promise(function (resolve, reject) {
           failedQueue.push({ resolve, reject });
         })
@@ -64,7 +61,6 @@ httpsRequest.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // gọi thẳng axios để tránh vòng import
         const { data } = await axios.post(
           `${baseURL}/auth/refresh-token`,
           {

@@ -1,68 +1,74 @@
-import httpsRequest from "../utils/httpsRequest";
+import httpsRequest from '../utils/httpsRequest';
 
-export default {
+const ExploreService = {
+  // Album
   async getAlbums() {
     try {
-      const res = await httpsRequest.get("/explore/albums");
+      const res = await httpsRequest.get('/explore/albums');
       return res.data.items;
     } catch (error) {
-      console.error("Lỗi API /explore/albums:", error);
+      console.error('Lỗi API /explore/albums:', error);
       return [];
     }
   },
 
+  // Mood & genre
   async getMoodsGenres() {
     try {
-      const res = await httpsRequest.get("/explore/meta");
-      const categories = res.data.categories;
-      const lines = res.data.lines;
+      const res = await httpsRequest.get('/explore/meta');
+      const { categories, lines } = res.data;
       return [...categories, ...lines];
     } catch (error) {
-      console.error("Lỗi API /explore/meta:", error);
+      console.error('Lỗi API /explore/meta:', error);
       return [];
     }
   },
 
+  // Video
   async getVideos() {
     try {
-      const res = await httpsRequest.get("/explore/videos");
+      const res = await httpsRequest.get('/explore/videos');
       return res.data.items;
     } catch (error) {
-      console.error("Lỗi API /explore/videos:", error);
+      console.error('Lỗi API /explore/videos:', error);
       return [];
     }
   },
 
+  // New releases
   async getNewReleases() {
     try {
-      const res = await httpsRequest.get("/explore/new-releases");
+      const res = await httpsRequest.get('/explore/new-releases');
       return res.data.items;
     } catch (error) {
-      console.error("Lỗi API /explore/new-releases:", error);
+      console.error('Lỗi API /explore/new-releases:', error);
       return [];
     }
   },
 
+  // Countries
   async getCountries() {
     try {
-      const res = await httpsRequest.get("/charts/countries");
+      const res = await httpsRequest.get('/charts/countries');
       return res.data.countries;
     } catch (error) {
-      console.error("Lỗi API /charts/countries:", error);
+      console.error('Lỗi API /charts/countries:', error);
       return [];
     }
   },
 
+  // Charts: Top videos
   async getTopVideos(country) {
     try {
       const res = await httpsRequest.get(`/charts/videos?country=${country}`);
       return res.data.items;
     } catch (error) {
-      console.error(`/charts/videos?country=${country}`, error);
+      console.error(`Lỗi API /charts/videos?country=${country}:`, error);
       return [];
     }
   },
 
+  // Charts: Top artists
   async getTopArtists(country) {
     try {
       const res = await httpsRequest.get(
@@ -70,27 +76,18 @@ export default {
       );
       return res.data.items;
     } catch (error) {
-      console.error(`/charts/top-artists?country=${country}`, error);
+      console.error(`Lỗi API /charts/top-artists?country=${country}:`, error);
       return [];
     }
   },
 
+  // Categories
   async getCategories() {
     try {
-      const res = await httpsRequest.get(`/categories`);
+      const res = await httpsRequest.get('/categories');
       return res.data.items;
     } catch (error) {
-      console.error("Lỗi API /categories:", error);
-      return [];
-    }
-  },
-
-  async getLineSongs() {
-    try {
-      const res = await httpsRequest.get(`/lines`);
-      return res.data.items;
-    } catch (error) {
-      console.error("Lỗi API /lines:", error);
+      console.error('Lỗi API /categories:', error);
       return [];
     }
   },
@@ -102,6 +99,17 @@ export default {
     } catch (error) {
       console.error(`Lỗi API /categories/${slug}:`, error);
       return {};
+    }
+  },
+
+  // Lines
+  async getLineSongs() {
+    try {
+      const res = await httpsRequest.get('/lines');
+      return res.data.items;
+    } catch (error) {
+      console.error('Lỗi API /lines:', error);
+      return [];
     }
   },
 
@@ -145,3 +153,5 @@ export default {
     }
   },
 };
+
+export default ExploreService;

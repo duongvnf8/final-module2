@@ -1,40 +1,77 @@
 import httpsRequest from '../utils/httpsRequest';
 
-export default {
-  async login(payload) {
-    const res = await httpsRequest.post('/auth/login', payload);
-    return res.data;
+const AuthService = {
+  async login(data) {
+    try {
+      const res = await httpsRequest.post('/auth/login', data);
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/login:', error);
+      return null;
+    }
   },
 
-  async signup(payload) {
-    const res = await httpsRequest.post('/auth/register', payload);
-    return res.data;
+  async signup(data) {
+    try {
+      const res = await httpsRequest.post('/auth/register', data);
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/register:', error);
+      return null;
+    }
   },
 
   async getProfile() {
-    const res = await httpsRequest.get('/auth/me');
-    return res.data;
+    try {
+      const res = await httpsRequest.get('/auth/me');
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/me:', error);
+      return null;
+    }
   },
 
   async logout() {
-    const res = await httpsRequest.delete('/auth/logout');
-    return res.data;
+    try {
+      const res = await httpsRequest.delete('/auth/logout');
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/logout:', error);
+      return null;
+    }
   },
 
   async refreshToken(refreshToken) {
-    const res = await httpsRequest.post('/auth/refresh-token', {
-      refreshToken,
-    });
-    return res.data;
+    try {
+      const res = await httpsRequest.post('/auth/refresh-token', {
+        refreshToken,
+      });
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/refresh-token:', error);
+      return null;
+    }
   },
 
   async updateProfile(data) {
-    const res = await httpsRequest.patch('/auth/me', data);
-    return res.data;
+    try {
+      const res = await httpsRequest.patch('/auth/me', data);
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/me (update profile):', error);
+      return null;
+    }
   },
 
   async changePassword(data) {
-    const res = await httpsRequest.patch('/auth/change-password', data);
-    return res.data;
+    try {
+      const res = await httpsRequest.patch('/auth/change-password', data);
+      return res.data;
+    } catch (error) {
+      console.error('Lỗi API /auth/change-password:', error);
+      return null;
+    }
   },
 };
+
+export default AuthService;

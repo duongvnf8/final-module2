@@ -1,32 +1,32 @@
-import httpsRequest from "../utils/httpsRequest";
+import httpsRequest from '../utils/httpsRequest';
 
-export default {
+const HomeService = {
   async getQuickPicks() {
     try {
-      const res = await httpsRequest.get(`/quick-picks`);
+      const res = await httpsRequest.get('/quick-picks');
       return res.data;
     } catch (error) {
-      console.error("Lỗi API /quick-picks:", error);
+      console.error('Lỗi API /quick-picks:', error);
       return [];
     }
   },
 
   async getAlbumsForYou() {
     try {
-      const res = await httpsRequest.get("/home/albums-for-you");
+      const res = await httpsRequest.get('/home/albums-for-you');
       return res.data;
     } catch (error) {
-      console.error("Lỗi API /home/albums-for-you:", error);
+      console.error('Lỗi API /home/albums-for-you:', error);
       return [];
     }
   },
 
   async getTodaysHits() {
     try {
-      const res = await httpsRequest.get("/home/todays-hits");
+      const res = await httpsRequest.get('/home/todays-hits');
       return res.data;
     } catch (error) {
-      console.error("Lỗi API /home/todays-hits:", error);
+      console.error('Lỗi API /home/todays-hits:', error);
       return [];
     }
   },
@@ -38,17 +38,17 @@ export default {
       );
       return res.data;
     } catch (error) {
-      console.error("Lỗi API /playlists/by-country:", error);
+      console.error(`Lỗi API /playlists/by-country (${country}):`, error);
       return [];
     }
   },
 
   async getMoods() {
     try {
-      const res = await httpsRequest.get("/moods");
+      const res = await httpsRequest.get('/moods');
       return res.data?.items || [];
     } catch (error) {
-      console.error("Lỗi API /moods:", error);
+      console.error('Lỗi API /moods:', error);
       return [];
     }
   },
@@ -63,3 +63,5 @@ export default {
     }
   },
 };
+
+export default HomeService;

@@ -1,7 +1,3 @@
-// src/pages/profile.js
-// LƯU Ý: chỉnh đúng đường dẫn tới file service nếu trong project bạn đặt tên khác (AuthService / authService)
-import AuthService from '../services/AuthServices';
-
 function formatDate(d) {
   if (!d) return '';
   try {
@@ -13,8 +9,6 @@ function formatDate(d) {
 }
 
 export default async function ProfilePage() {
-  // Không gọi API ở render để giữ việc bind handlers tách rời (nhanh hơn).
-  // Tuy nhiên nếu muốn tải realtime profile ở đây, có thể gọi AuthService.getProfile().
   const stored = JSON.parse(localStorage.getItem('user') || 'null');
   const user = stored || {
     id: '',
@@ -46,7 +40,6 @@ export default async function ProfilePage() {
         </div>
       </div>
 
-      <!-- UPDATE PROFILE -->
       <section class="mb-8 bg-[#0b0b0b] p-4 rounded-lg border border-white/10">
         <h2 class="text-lg font-semibold mb-3">Cập nhật thông tin</h2>
         <form id="form-update-profile" class="space-y-3">
@@ -72,7 +65,6 @@ export default async function ProfilePage() {
         </form>
       </section>
 
-      <!-- CHANGE PASSWORD -->
       <section class="mb-8 bg-[#0b0b0b] p-4 rounded-lg border border-white/10">
         <h2 class="text-lg font-semibold mb-3">Đổi mật khẩu</h2>
         <form id="form-change-password" class="space-y-3">

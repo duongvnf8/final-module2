@@ -1,4 +1,4 @@
-import { splitToColumns } from '../format/splitToColumns.js';
+import { formatColumns } from '../format/formatColumns.js';
 import { formatViews } from '../format/formatViews.js';
 import ContentSection from './ContentSection.js';
 import Scroll from './Scroll.js';
@@ -48,7 +48,7 @@ export default function ArtistsList(title, items = []) {
     return `<div class="flex flex-col gap-3 shrink-0 min-w-[33%] -mb-6">${rows}</div>`;
   }
 
-  const columns = splitToColumns(items);
+  const columns = formatColumns(items);
   const columnsHtml = columns.map(col => renderColumn(col)).join('');
 
   return ContentSection(title, Scroll(columnsHtml));

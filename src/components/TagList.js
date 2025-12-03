@@ -1,23 +1,23 @@
 import Scroll from './Scroll';
 
-export default function TagList(tagData, currentSlug = '') {
-  const renderTag = item => `
+export default function TagList(tags = [], currentSlug = '') {
+  const renderTag = tag => `
     <a 
-      href="/moods/${item.slug}" 
+      href="/moods/${tag.slug}"
       data-navigo
-      class="flex items-center px-3 py-2 rounded-lg text-sm shrink-0 cursor-pointer
+      class="
+        flex items-center px-3 py-2 rounded-lg text-sm shrink-0 cursor-pointer
         ${
-          item.slug === currentSlug
+          tag.slug === currentSlug
             ? 'bg-white text-black font-semibold'
             : 'bg-white/10 text-white hover:bg-white/20'
         }
       "
     >
-      ${item.name}
+      ${tag.name}
     </a>
   `;
 
-  const tagHtml = (tagData || []).map(renderTag).join('');
-
-  return Scroll(tagHtml);
+  const html = tags.map(renderTag).join('');
+  return Scroll(html);
 }

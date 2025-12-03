@@ -1,22 +1,25 @@
-import Scroll from "./Scroll.js";
-import ContentSection from "./ContentSection.js";
-import { splitToColumns } from "../format/splitToColumns.js";
+// CategoriesList.js
+import Scroll from './Scroll.js';
+import ContentSection from './ContentSection.js';
+import { formatColumns } from '../format/formatColumns.js';
 
 export default function CategoriesList(
-  title,
+  title = '',
   categories = [],
-  basePath = "/categories"
+  basePath = '/categories'
 ) {
   function CategoryItem(item = {}) {
     const slug = item.slug;
     const name = item.name;
     const color = item.color;
 
+    const href = `${basePath}/${encodeURIComponent(slug)}`;
+
     return `
       <a
-        href="${basePath}/${slug}"
+        href="${href}"
         data-navigo
-        class="h-12 rounded-lg flex items-center text-white text-sm font-semibold cursor-pointer bg-[#292929]"
+        class="h-12 rounded-lg flex items-center text-white text-sm font-semibold cursor-pointer bg-[#292929] overflow-hidden"
       >
         <div
           style="background-color: ${color};"
@@ -33,16 +36,13 @@ export default function CategoriesList(
   function CategoryColumn(items = []) {
     return `
       <div class="flex flex-col shrink-0 w-40 md:w-48 lg:w-52 xl:w-60 gap-4">
-        ${items.map(CategoryItem).join("")}
+        ${items.map(CategoryItem).join('')}
       </div>
     `;
   }
 
-  const columns = splitToColumns(categories || []);
-
-  const html = `
-    ${columns.map(CategoryColumn).join("")}
-  `;
+  const columns = formatColumns(categories || []);
+  const html = columns.map(CategoryColumn).join('');
 
   return ContentSection(title, Scroll(html));
 }

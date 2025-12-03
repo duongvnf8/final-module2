@@ -10,11 +10,10 @@ import MoodPage from '../pages/MoodPage.js';
 import CategoryDetailPage from '../pages/CategoryDetailPage.js';
 import ProfilePage from '../pages/ProfilePage.js';
 
-// Services
 import HomeService from '../services/HomeService.js';
 import ExploreService from '../services/ExploreService.js';
-import AuthServices from '../services/AuthServices.js';
-
+import DetailServices from '../services/DetailServices.js';
+import AlbumPlaylistPage from '../pages/AlbumPlaylistPage.js';
 import {
   initAuthHandlers,
   initProfileHandlers,
@@ -49,6 +48,16 @@ const initRouter = async () => {
 
     .on('/moods-and-genres', async () => {
       page.innerHTML = await MoodsGenresPage();
+    })
+    .on('/playlists/details/:slug', async ({ data }) => {
+      const playlistDetails = await DetailServices.getPlaylistDetails(
+        data.slug
+      );
+      page.innerHTML = await AlbumPlaylistPage(playlistDetails);
+    })
+    .on('/albums/details/:slug', async ({ data }) => {
+      const albumDetails = await DetailServices.getAlbumDetails(data.slug);
+      page.innerHTML = await AlbumPlaylistPage(albumDetails);
     })
 
     .on('/moods/:slug', async ({ data }) => {

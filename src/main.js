@@ -1,4 +1,4 @@
-import './main.css';
+import './assets/main.css';
 import App from './app.js';
 import initRouter from './route/router.js';
 import { initSidebarController } from './controllers/SidebarController.js';
