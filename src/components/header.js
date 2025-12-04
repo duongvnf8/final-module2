@@ -32,7 +32,7 @@ function Header() {
 
         <div id="user-dropdown"
           class="hidden absolute right-0 mt-2 bg-white text-black rounded-lg shadow-lg py-1 w-48 border border-gray-200 z-50"
-          role="menu" aria-label="User menu">
+          role="menu">
           <a id="account-info" href="/profile" class="block px-4 py-2 hover:bg-gray-100" role="menuitem">Thông tin tài khoản</a>
           <button id="logout-btn" class="block w-full text-left px-4 py-2 hover:bg-gray-100" role="menuitem">Đăng xuất</button>
         </div>
