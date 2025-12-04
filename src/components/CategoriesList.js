@@ -1,4 +1,3 @@
-// CategoriesList.js
 import Scroll from './Scroll.js';
 import ContentSection from './ContentSection.js';
 import { formatColumns } from '../format/formatColumns.js';
@@ -13,7 +12,7 @@ export default function CategoriesList(
     const name = item.name;
     const color = item.color;
 
-    const href = `${basePath}/${encodeURIComponent(slug)}`;
+    const href = `${basePath}/${slug}`;
 
     return `
       <a

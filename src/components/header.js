@@ -24,7 +24,7 @@ function Header() {
     authButton = `
       <div id="user-wrap" class="relative">
         <button id="user-btn" aria-haspopup="true" aria-expanded="false"
-          class="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-white/10 focus:outline-none"
+          class=" cursor-pointer flex items-center gap-2 px-2 py-1 rounded-full hover:bg-white/10 focus:outline-none"
           title="${user.name}">
           ${avatarHtml}
           <span class="hidden sm:inline text-sm">${user.name}</span>

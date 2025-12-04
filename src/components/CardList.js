@@ -29,7 +29,6 @@ export default function CardList(
         </div>
       </div>
 
-      <!-- Text area inside remaining space -->
       <div class="h-[94.6px] mt-2">
         <h3 class="text-white font-medium truncate">
           ${entry.title ?? entry.name}

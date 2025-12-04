@@ -1,6 +1,6 @@
 import CardList from '../components/CardList';
 
-export default function CategoryDetailPage(category = {}) {
+async function CategoryDetailPage(category = {}) {
   const title = category.name || 'Danh mục';
 
   const subs = Array.isArray(category.subcategories)
@@ -22,3 +22,4 @@ export default function CategoryDetailPage(category = {}) {
     </div>
   `;
 }
+export default CategoryDetailPage;

@@ -1,11 +1,11 @@
-import ExploreService from "../services/ExploreService";
-import CardList from "../components/CardList";
-import CategoriesList from "../components/CategoriesList";
+import ExploreService from '../services/ExploreService';
+import CardList from '../components/CardList';
+import CategoriesList from '../components/CategoriesList';
 
-import newRelease from "../assets/icons/newRelease.svg";
-import ranking from "../assets/icons/ranking.svg";
-import mood from "../assets/icons/mood.svg";
-import VideosList from "../components/VideoList";
+import newRelease from '../assets/icons/newRelease.svg';
+import ranking from '../assets/icons/ranking.svg';
+import mood from '../assets/icons/mood.svg';
+import VideosList from '../components/VideosList';
 
 async function ExplorePage() {
   const [albums, moodsGenres, videos] = await Promise.all([
@@ -18,6 +18,7 @@ async function ExplorePage() {
     <div class="flex flex-col gap-7">
       <section class="flex gap-6 font-bold">
         <a
+          href="/new-releases"
           class="cursor-pointer bg-[#292929] hover:bg-[#212121] rounded-md px-4 py-3 flex-1 flex justify-start items-center gap-3 text-[20px]" data-navigo>
           <img src="${newRelease}" alt="up icon" />
           <span>Bản phát hành mới</span>
@@ -30,16 +31,18 @@ async function ExplorePage() {
           <span>Bảng xếp hạng</span>
         </a>
 
-        <a class="cursor-pointer bg-[#292929] hover:bg-[#212121] rounded-md px-4 py-3 flex-1 flex justify-start items-center gap-3 text-[20px]" data-navigo>
+        <a 
+          href="/moods-and-genres""
+          class="cursor-pointer bg-[#292929] hover:bg-[#212121] rounded-md px-4 py-3 flex-1 flex justify-start items-center gap-3 text-[20px]" data-navigo>
           <img src="${mood}" alt="mood icon" />
           <span>Tâm trạng và thể loại</span>
         </a>
 
       </section>
 
-      ${CardList("Khám phá Albums mới", albums, "/albums/details")}
-      ${CategoriesList("Tâm trạng và thể loại", moodsGenres)}
-      ${VideosList("Video nhạc mới", videos)}
+      ${CardList('Khám phá Albums mới', albums, '/albums/details')}
+      ${CategoriesList('Tâm trạng và thể loại', moodsGenres)}
+      ${VideosList('Video nhạc mới', videos)}
 
     </div>
   `;

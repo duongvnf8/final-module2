@@ -1,9 +1,6 @@
-// src/controllers/SidebarController.js
-
 let isInitialized = false;
 
 export function initSidebarController() {
-  // chống gắn sự kiện nhiều lần
   if (isInitialized) return;
   isInitialized = true;
 
@@ -13,7 +10,6 @@ export function initSidebarController() {
   const texts = document.querySelectorAll('.js-text');
   const main = document.querySelector('#js-body');
 
-  // auth elements
   const btnLogin = document.querySelector('.menu-item[href="/login"]');
   const hrElement = document.querySelector('.js-sidebar hr');
   const upgradeItem = document.querySelector('.menu-item[href="/upgrade"]');
@@ -23,9 +19,6 @@ export function initSidebarController() {
     return;
   }
 
-  /* -----------------------------------------
-     1) Toggle Sidebar
-  ------------------------------------------ */
   btn.addEventListener('click', () => {
     sidebar.classList.toggle('w-[72px]');
     sidebar.classList.toggle('w-60');
@@ -46,9 +39,6 @@ export function initSidebarController() {
     });
   });
 
-  /* -----------------------------------------
-     2) Auth-based visibility
-  ------------------------------------------ */
   const updateAuthVisibility = () => {
     const token = localStorage.getItem('access_token');
 
@@ -58,12 +48,10 @@ export function initSidebarController() {
     if (!btnLogin || !hrElement || !upgradeItem) return;
 
     if (token) {
-      // authenticated → hide login & hr, show upgrade
       loginLi?.classList.add('hidden');
       hrElement.classList.add('hidden');
       upgradeLi?.classList.remove('hidden');
     } else {
-      // not logged in → show login & hr, hide upgrade
       loginLi?.classList.remove('hidden');
       hrElement.classList.remove('hidden');
       upgradeLi?.classList.add('hidden');
@@ -71,8 +59,6 @@ export function initSidebarController() {
   };
 
   updateAuthVisibility();
-
-  // nếu bạn muốn tự động cập nhật khi chuyển trang Navigo:
   if (window.router) {
     window.router.on('*', () => updateAuthVisibility());
   }

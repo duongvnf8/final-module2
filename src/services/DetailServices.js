@@ -3,7 +3,7 @@ import httpsRequest from '../utils/httpsRequest';
 const DetailServices = {
   async getPlaylistDetails(slug) {
     try {
-      const safeSlug = encodeURIComponent(slug);
+      const safeSlug = slug;
       const res = await httpsRequest.get(
         `/playlists/details/${safeSlug}?limit=50`
       );
@@ -16,7 +16,7 @@ const DetailServices = {
 
   async getAlbumDetails(slug) {
     try {
-      const safeSlug = encodeURIComponent(slug);
+      const safeSlug = slug;
       const res = await httpsRequest.get(`/albums/details/${safeSlug}`);
       return res.data ?? {};
     } catch (error) {
@@ -27,7 +27,7 @@ const DetailServices = {
 
   async getSongDetails(id) {
     try {
-      const safeId = encodeURIComponent(id);
+      const safeId = id;
       const res = await httpsRequest.get(`/songs/details/${safeId}`);
       return res.data ?? {};
     } catch (error) {
@@ -38,11 +38,11 @@ const DetailServices = {
 
   async getVideoDetails(id) {
     try {
-      const safeId = encodeURIComponent(id);
-      const res = await httpsRequest.get(`/videos/details/${safeId}`);
+      const safeId = id;
+      const res = await httpsRequest.get(`/videos/details/${safeId}?limit=20`);
       return res.data ?? {};
     } catch (error) {
-      console.error(`Lỗi API /videos/details/${id}:`, error);
+      console.error(`Lỗi API  /videos/details/${id}:`, error);
       return {};
     }
   },

@@ -1,7 +1,6 @@
 import httpsRequest from '../utils/httpsRequest';
 
 const ExploreService = {
-  // Album
   async getAlbums() {
     try {
       const res = await httpsRequest.get('/explore/albums');
@@ -12,7 +11,6 @@ const ExploreService = {
     }
   },
 
-  // Mood & genre
   async getMoodsGenres() {
     try {
       const res = await httpsRequest.get('/explore/meta');
@@ -24,7 +22,6 @@ const ExploreService = {
     }
   },
 
-  // Video
   async getVideos() {
     try {
       const res = await httpsRequest.get('/explore/videos');
@@ -35,7 +32,6 @@ const ExploreService = {
     }
   },
 
-  // New releases
   async getNewReleases() {
     try {
       const res = await httpsRequest.get('/explore/new-releases');
@@ -46,7 +42,6 @@ const ExploreService = {
     }
   },
 
-  // Countries
   async getCountries() {
     try {
       const res = await httpsRequest.get('/charts/countries');
@@ -57,31 +52,28 @@ const ExploreService = {
     }
   },
 
-  // Charts: Top videos
   async getTopVideos(country) {
     try {
       const res = await httpsRequest.get(`/charts/videos?country=${country}`);
-      return res.data.items;
+      return res.data.items || [];
     } catch (error) {
       console.error(`Lỗi API /charts/videos?country=${country}:`, error);
       return [];
     }
   },
 
-  // Charts: Top artists
   async getTopArtists(country) {
     try {
       const res = await httpsRequest.get(
         `/charts/top-artists?country=${country}`
       );
-      return res.data.items;
+      return res.data.items || [];
     } catch (error) {
       console.error(`Lỗi API /charts/top-artists?country=${country}:`, error);
       return [];
     }
   },
 
-  // Categories
   async getCategories() {
     try {
       const res = await httpsRequest.get('/categories');
@@ -102,7 +94,6 @@ const ExploreService = {
     }
   },
 
-  // Lines
   async getLineSongs() {
     try {
       const res = await httpsRequest.get('/lines');

@@ -1,4 +1,3 @@
-// src/controllers/AuthController.js
 import AuthService from '../services/AuthServices';
 
 function isValidEmail(email) {
@@ -38,7 +37,6 @@ function clearAuthAndRedirectLogin() {
 }
 
 export function initAuthHandlers() {
-  // prevent double-init
   const root = document.body;
   if (root.dataset.authInited === 'true') return;
   root.dataset.authInited = 'true';
@@ -153,7 +151,6 @@ export function initAuthHandlers() {
 }
 
 export function initProfileHandlers() {
-  // prevent double-init
   const root = document.body;
   if (root.dataset.profileInited === 'true') return;
   root.dataset.profileInited = 'true';
@@ -162,7 +159,6 @@ export function initProfileHandlers() {
   const formChange = document.getElementById('form-change-password');
   if (!formUpdate && !formChange) return;
 
-  /* Update profile elements */
   const elName = document.getElementById('profile-name');
   const elEmail = document.getElementById('profile-email');
   const errName = document.getElementById('err-name');
@@ -303,7 +299,6 @@ export function initProfileHandlers() {
     });
   }
 
-  /* Change password */
   if (formChange) {
     formChange.addEventListener('submit', async e => {
       e.preventDefault();
@@ -402,7 +397,6 @@ export function initProfileHandlers() {
 export function initLogoutHandler() {
   const logoutBtn = document.getElementById('logout-btn');
   if (!logoutBtn) return;
-  // prevent double binding
   if (logoutBtn.dataset.logoutInit === 'true') return;
   logoutBtn.dataset.logoutInit = 'true';
 

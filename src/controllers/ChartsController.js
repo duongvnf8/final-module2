@@ -1,12 +1,12 @@
-import ExploreService from "../services/ExploreService";
-import ArtistsList from "../components/ArtistsList";
-import VideosList from "../components/VideosList";
+import ExploreService from '../services/ExploreService';
+import ArtistsList from '../components/ArtistsList';
+import VideosList from '../components/VideosList';
 
-export async function ChartsController(defaultCountry = "GLOBAL") {
-  const countrySelect = document.querySelector("#country-select");
+export async function ChartsController(defaultCountry = 'GLOBAL') {
+  const countrySelect = document.querySelector('#country-select');
   if (!countrySelect) return;
 
-  const chartsContent = document.querySelector("#charts-content");
+  const chartsContent = document.querySelector('#charts-content');
   if (!chartsContent) return;
 
   async function updateCharts(country) {
@@ -16,11 +16,11 @@ export async function ChartsController(defaultCountry = "GLOBAL") {
     ]);
 
     chartsContent.innerHTML =
-      VideosList("Bảng xếp hạng video", videos) +
-      ArtistsList("Nghệ sĩ hàng đầu", artists);
+      VideosList('Bảng xếp hạng video', videos) +
+      ArtistsList('Nghệ sĩ hàng đầu', artists);
   }
 
-  countrySelect.addEventListener("change", async (e) => {
+  countrySelect.addEventListener('change', async e => {
     await updateCharts(e.target.value);
   });
 

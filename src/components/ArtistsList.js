@@ -3,13 +3,14 @@ import { formatViews } from '../format/formatViews.js';
 import ContentSection from './ContentSection.js';
 import Scroll from './Scroll.js';
 
+import artistUp from '../assets/icons/artistUp.svg';
+import artistDown from '../assets/icons/artistDown.svg';
+
 export default function ArtistsList(title, items = []) {
   function renderTrend(trend) {
     if (!trend) return '';
-    if (trend === 'up')
-      return `<span class="text-green-400 text-sm ml-1">▲</span>`;
-    if (trend === 'down')
-      return `<span class="text-red-400 text-sm ml-1">▼</span>`;
+    if (trend === 'up') return `<img src="${artistUp}" alt="artistUp" />`;
+    if (trend === 'down') return `<img src="${artistDown}" alt="artistDown" />`;
     return '';
   }
 

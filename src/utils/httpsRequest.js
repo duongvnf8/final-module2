@@ -1,4 +1,3 @@
-// src/utils/httpsRequest.js
 import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_BASE_URL || '';
@@ -36,7 +35,6 @@ httpsRequest.interceptors.response.use(
 
     if (!originalRequest) return Promise.reject(error);
 
-    // nếu response 401 và chưa retry
     if (error.response?.status === 401 && !originalRequest._retry) {
       const refreshToken = localStorage.getItem('refresh_token');
       if (!refreshToken) {

@@ -14,12 +14,12 @@ export default function VideosList(title, items = []) {
       <a
         href="/videos/details/${id}"
         data-navigo
-        class="w-60 md:w-80 lg:w-[340px] xl:w-[400px] -mb-6 cursor-pointer shrink-0 block group"
+        class="w-[320px] h-[274.6px] cursor-pointer shrink-0 block group"
       >
         <div class="relative">
           <img
             src="${thumb}"
-            class="rounded-xl w-full h-[180px] lg:h-[200px] xl:h-60 object-cover mb-2 transition duration-200"
+            class="rounded-xl w-full h-[180px] object-cover mb-2 transition duration-200"
           />
 
           <div class="absolute inset-0 bg-black/40 rounded-xl opacity-0 group-hover:opacity-100 transition duration-200"></div>
@@ -29,7 +29,7 @@ export default function VideosList(title, items = []) {
           </div>
         </div>
 
-        <h3 class="text-white font-medium truncate my-2">${name}</h3>
+        <h3 class="h-[94.6px] text-white font-medium truncate my-2">${name}</h3>
 
         ${
           views !== null

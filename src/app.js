@@ -1,6 +1,6 @@
 import Player from './components/Player.js';
 import Header from './components/header.js';
-import Sidebar from './components/sidebar.js';
+import Sidebar from './components/Sidebar.js';
 
 async function App() {
   return `
